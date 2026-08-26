@@ -3,6 +3,7 @@ import pandas as pd
 from backend.database import connect_database
 
 
+# ==== 讀取比賽資料 ====
 def load_match_data():
 
     # Connect to MySQL database
@@ -39,3 +40,36 @@ def load_match_data():
     connection.close()
 
     return match_df
+
+
+# ==== 讀取球隊資料 ====
+def load_team_data():
+
+    # Connection to Mysql database
+    connection = connect_database()
+    cursor = connection.cursor()
+
+    # Read all team records from MySQL
+    sql = """
+        SELECT *
+        FROM team
+    """
+
+    cursor.execute(sql)
+
+    # Get column names and query result
+    column_names = cursor.column_names
+    team_data = cursor.fetchall()
+
+    # Convert Mysql query result to Pandas DataFrame
+    team_df = pd.DataFrame(
+        team_data,
+        columns = column_names
+    )
+
+    # Close database resources after reading data
+    cursor.close()
+    connection.close()
+
+
+    return team_df
