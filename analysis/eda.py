@@ -23,7 +23,12 @@ from analysis.football_analysis import (
     show_team_goal_averages,
     show_team_result_counts
 )
-
+from analysis.visualization import (
+    plot_match_result_bar_chart,
+    plot_total_goals_histogram,
+    plot_team_goal_averages,
+    plot_team_result_distribution
+)
 
 def main():
 
@@ -122,6 +127,17 @@ def main():
     # Show wins, draws, and losses for each team
     show_team_result_counts(team_result_df)
 
+    # Plot the distribution of match results
+    plot_match_result_bar_chart(match_result_df)
+
+    # Plot the distribution of total goals per match
+    plot_total_goals_histogram(match_result_df)
+
+    # Plot average goals scored and conceded for each team
+    plot_team_goal_averages(team_match_df)
+
+    # Plot win, draw, and loss distribution for each team
+    plot_team_result_distribution(team_result_df)
 
 if __name__ == "__main__":
     main()
