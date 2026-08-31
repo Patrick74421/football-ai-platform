@@ -29,6 +29,10 @@ from analysis.visualization import (
     plot_team_goal_averages,
     plot_team_result_distribution
 )
+from analysis.distribution_analysis import (
+    show_total_goals_mean_variance,
+    show_poisson_observed_expected
+)
 
 def main():
 
@@ -99,6 +103,12 @@ def main():
 
     # Show the distribution of total goals per match
     show_total_goals_distribution(match_result_df)
+
+    # Show mean and variance of total goals for distribution analysis
+    show_total_goals_mean_variance(match_result_df)
+
+    # Compare observed total goal frequencies with Poisson expected frequencies
+    show_poisson_observed_expected(match_result_df)
 
     # Display Team A and Team B names
     print("Match Team Names:")
