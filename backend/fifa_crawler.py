@@ -4,7 +4,7 @@ import requests
 # API Setting
 #============================
 
-MATCH_URL = "https://inside.fifa.com/api/data-centre/matches?gender=1&year=2022&language=en&count=25"
+MATCH_URL = "https://inside.fifa.com/api/data-centre/matches?gender=1&year=2022&language=en&count=1000"
 TEAM_URL = "https://inside.fifa.com/api/data-centre/matches/teams?gender=1&language=en&year=2022"
 
 
