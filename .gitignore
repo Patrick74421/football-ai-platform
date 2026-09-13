@@ -8,4 +8,8 @@ __pycache__/
 *.pyc
 
 # Environment Variables
+
+#FastAPI / 專案環境變數，不上 Git
 .env
+#MySQL Container 初始化 Secret，不上 Git
+.mysql.env

@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+.env
+.mysql.env
+.git/
+.gitignore
+tests/
+legacy/
+docs/
+data/
