@@ -1,0 +1,23 @@
+# FastAPI Kubernetes Service
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: football-ai-api
+
+spec:
+    # Service 透過 Label 找到 FastAPI Pod
+    selector:
+        app: football-ai-api
+
+    ports:
+      - protocol: TCP
+
+        # Service 對外提供的 Port
+        port: 8000
+
+        # FastAPI Pod 實際接收流量的 Port
+        targetPort: 8000
+
+    # 目前只提供 Kubernetes Cluster 內部使用
+    type: ClusterIP

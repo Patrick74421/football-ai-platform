@@ -1,0 +1,10 @@
+# Football AI Kubernetes ConfigMap
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: football-ai-config
+
+data:
+    # FastAPI 透過 Kubernetes Service 名稱連線 MySQL
+    DB_HOST: football-ai-mysql

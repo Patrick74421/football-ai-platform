@@ -1,0 +1,19 @@
+# MySQL PersistentVolumeClaim
+apiVersion: v1
+kind: PersistentVolumeClaim
+
+metadata:
+  name: football-ai-mysql-pvc
+
+spec:
+  # 單一 Node 可讀寫
+  accessModes:
+    - ReadWriteOnce
+
+  # 使用 Minikube 預設 StorageClass
+  storageClassName: standard
+
+  resources:
+    requests:
+      # MySQL 目前資料量很小，1Gi 已足夠
+      storage: 1Gi

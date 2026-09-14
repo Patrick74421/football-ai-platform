@@ -1,0 +1,52 @@
+# MySQL Kubernetes StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+
+metadata:
+  name: football-ai-mysql
+
+spec:
+    # StatefulSet 使用的 Service 名稱
+    # 這個 Service 會在後面的步驟建立
+    serviceName: football-ai-mysql
+
+    # 目前只需要一個 MySQL Pod
+    replicas: 1
+
+    # StatefulSet 透過 Label 管理自己的 Pod
+    selector:
+      matchLabels:
+        app: football-ai-mysql
+
+    # ==== Pod Template ====
+    template:
+      metadata:
+        labels:
+          app: football-ai-mysql
+
+      spec:
+        containers:
+          - name: football-ai-mysql
+
+            # 使用 MySQL 8.0 Image
+            image: mysql:8.0
+
+            # 從 Kubernetes Secret 載入 MySQL 環境變數
+            envFrom:
+              - secretRef:
+                  name: football-ai-mysql-secret
+
+            # MySQL 預設使用 3306 Port
+            ports:
+              - containerPort: 3306
+
+            # 將 Persistent Storage 掛載到 MySQL 資料目錄
+            volumeMounts:
+              - name: mysql-data
+                mountPath: /var/lib/mysql
+
+        # ==== Persistent Volume ====
+        volumes:
+          - name: mysql-data
+            persistentVolumeClaim:
+              claimName: football-ai-mysql-pvc

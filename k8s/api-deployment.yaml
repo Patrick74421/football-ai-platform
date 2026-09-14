@@ -1,0 +1,65 @@
+# FastAPI Kubernetes Deployment
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: football-ai-api
+
+spec:
+  # 目前先啟動 1 個 FastAPI Pod
+  replicas: 1
+
+  # Deployment 用這個 Label 找到自己管理的 Pod
+  selector:
+    matchLabels:
+      app: football-ai-api
+
+  # ==== Pod Template ====
+  template:
+    metadata:
+      labels:
+        app: football-ai-api
+
+    spec:
+      containers:
+        - name: football-ai-api
+
+          # 使用前面載入 Minikube 的 Docker Image
+          image: football-ai-platform:v1
+
+          # Minikube 已經有此 Image，不必每次都重新下載
+          imagePullPolicy: IfNotPresent
+
+          # ==== Database Environment Variables ====
+          # DB_HOST 從 ConfigMap 取得
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: football-ai-config
+                  key: DB_HOST
+
+            # DB_NAME 從 Secret 的 MYSQL_DATABASE 取得
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: football-ai-mysql-secret
+                  key: MYSQL_DATABASE
+
+            # DB_USER 從 Secret 的 MYSQL_USER 取得
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: football-ai-mysql-secret
+                  key: MYSQL_USER
+
+            # DB_PASSWORD 從 Secret 的 MYSQL_PASSWORD 取得
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: football-ai-mysql-secret
+                  key: MYSQL_PASSWORD
+
+          # FastAPI / Uvicorn 使用 8000 Port
+          ports:
+            - containerPort: 8000

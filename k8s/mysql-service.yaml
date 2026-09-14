@@ -1,0 +1,24 @@
+# MySQL Kubernetes Service
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: football-ai-mysql
+
+spec:
+  # Headless Service
+  # StatefulSet 可以透過這個 Service 取得穩定 DNS
+  clusterIP: None
+
+  # 找到 MySQL StatefulSet 建立的 Pod
+  selector:
+    app: football-ai-mysql
+
+  ports:
+    - protocol: TCP
+
+      # MySQL Service Port
+      port: 3306
+
+      # MySQL Container Port
+      targetPort: 3306
